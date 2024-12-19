@@ -1,11 +1,12 @@
-from transformers import LlamaTokenizer, LlamaForCausalLM
+# Load model directly
+from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
 
 # Function to load the LLaMA model and tokenizer
-def load_model(model_name="meta-llama/Llama-2-13b"):
+def load_model():
     print("Loading model and tokenizer...")
-    tokenizer = LlamaTokenizer.from_pretrained(model_name)
-    model = LlamaForCausalLM.from_pretrained(model_name, torch_dtype=torch.float16, device_map="auto")
+    tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-3.2-1B")
+    model = AutoModelForCausalLM.from_pretrained("meta-llama/Llama-3.2-1B")
     print("Model and tokenizer loaded successfully!")
     return tokenizer, model
 
@@ -29,11 +30,9 @@ def generate_workflow(model, tokenizer, business_details, max_tokens=300):
 
 # Main function to handle user input and generate the workflow
 def main():
-    # Specify the LLaMA model to use
-    model_name = "meta-llama/Llama-2-13b"  # Update this if using another LLaMA variant
 
     # Load the model and tokenizer
-    tokenizer, model = load_model(model_name)
+    tokenizer, model = load_model()
 
     # Input details about the client's business
     print("Enter details about the client's business.")
